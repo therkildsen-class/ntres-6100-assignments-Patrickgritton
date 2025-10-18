@@ -1,0 +1,97 @@
+---
+title: "Lab8"
+format: html
+---
+
+## Lab 8
+
+Load Packages
+
+``` r
+library(tidyverse)
+```
+
+**Exersize 1: For loops**
+
+Approach 1: Null output
+
+``` r
+x <- 1:10
+y <- 11:20
+z <- NULL
+for (i in 1:length(x)){
+  z <- c(z, x[i] + y[i])
+}
+z
+```
+
+Approach 2: defined output
+
+``` r
+x <- 1:10
+y <- 11:20
+z <- vector(mode = "double", length=10)
+for (i in 1:length(x)){
+  z[i] <- x[i] + y[i]
+}
+z
+```
+
+compare the two approaches
+
+``` r
+
+x <- 1:100000
+y <- 100001:200000
+z <- NULL
+time_null <- system.time(
+for (i in 1:length(x)){
+  z <- c(z, x[i] + y[i])
+})
+z
+time_null
+
+x <- 1:100000
+y <- 100001:200000
+z <- vector(mode = "double", length=10)
+time_defined <- system.time(
+for (i in 1:length(x)){
+  z[i] <- x[i] + y[i]
+})
+z
+time_defined
+```
+
+[**For 100,000 iterations:**]{.underline}
+
+Null approach system time = .34
+
+Null approach user time = 11.91
+
+Defined approach System time = 0.0
+
+Defined approach user time = 0.05
+
+**The system time and user time of the null approach was larger, meaning it was slower and therefore less efficient!**
+
+**Exersise 2: Infinite Monkeys**
+
+```r
+
+characters <- c(letters, " ", ",", "!")
+
+string <- paste(sample(characters, 1000, replace = TRUE))
+
+string[1] <- sample(LETTERS, 1)
+
+string2 <- vector(mode = "character", length=length(string))
+
+for (i in length(string)) { 
+x <- ifelse(string[i] == "o","q", string[i])
+string2[i] <- x
+}
+
+string2
+
+
+```
