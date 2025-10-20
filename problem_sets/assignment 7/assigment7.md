@@ -1,11 +1,8 @@
----
-title: "Assigment_7"
-author: "Patrick Gritton"
-format: gfm
-editor: visual
----
+# Assigment_7
+Patrick Gritton
 
-Assignment 7: Relational data plus revisiting data wrangling and visualization ================
+Assignment 7: Relational data plus revisiting data wrangling and
+visualization ================
 
 ## Activate necessary packages
 
@@ -19,24 +16,37 @@ library(dslabs)
 
 ## Excercise: 2016 election result and polling
 
-For this exercise, we will explore the result of the 2016 US presidential election as well as the polling data. We will use the following three datasets in the `dslabs` package, and use `join` function to connect them together. As a reminder, you can use `?` to learn more about these datasets.
+For this exercise, we will explore the result of the 2016 US
+presidential election as well as the polling data. We will use the
+following three datasets in the `dslabs` package, and use `join`
+function to connect them together. As a reminder, you can use `?` to
+learn more about these datasets.
 
--   `results_us_election_2016`: Election results (popular vote) and electoral college votes from the 2016 presidential election.
+- `results_us_election_2016`: Election results (popular vote) and
+  electoral college votes from the 2016 presidential election.
 
--   `polls_us_election_2016`: Poll results from the 2016 presidential elections.
+- `polls_us_election_2016`: Poll results from the 2016 presidential
+  elections.
 
--   `murders`: Gun murder data from FBI reports. It also contains the population of each state.
+- `murders`: Gun murder data from FBI reports. It also contains the
+  population of each state.
 
-We will also use [this dataset](https://raw.githubusercontent.com/kshaffer/election2016/master/2016ElectionResultsByState.csv) to get the exact numbers of votes for question 3.
+We will also use [this
+dataset](https://raw.githubusercontent.com/kshaffer/election2016/master/2016ElectionResultsByState.csv)
+to get the exact numbers of votes for question 3.
 
 <br>
 
 ### Question 1. What is the relationship between the population size and the number of electoral votes each state has?
 
-**1a.** Use a `join` function to combine the `murders` dataset, which contains information on population size, and the `results_us_election_2016` dataset, which contains information on the number of electoral votes. Name this new dataset `q_1a`, and show its first 6 rows.
+**1a.** Use a `join` function to combine the `murders` dataset, which
+contains information on population size, and the
+`results_us_election_2016` dataset, which contains information on the
+number of electoral votes. Name this new dataset `q_1a`, and show its
+first 6 rows.
 
 | state | abb | region | population | total | electoral_votes | clinton | trump | johnson | stein | mcmullin | others |
-|:-----|:-----|:-----|-----:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+|:---|:---|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Alabama | AL | South | 4779736 | 135 | 9 | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.0225246 |
 | Alaska | AK | West | 710231 | 19 | 3 | 36.55087 | 51.28151 | 5.877128 | 1.8000176 | 0.0000000 | 4.4904710 |
 | Arizona | AZ | West | 6392017 | 232 | 11 | 44.58042 | 48.08314 | 4.082188 | 1.3185997 | 0.6699155 | 1.2657329 |
@@ -51,7 +61,9 @@ q_1a <- murders |>
 
 <br> <br>
 
-**1b.** Add a new variable in the `q_1a` dataset to indicate which candidate won in each state, and remove the columns `abb`, `region`, and `total`. Name this new dataset `q_1b`, and show its first 6 rows.
+**1b.** Add a new variable in the `q_1a` dataset to indicate which
+candidate won in each state, and remove the columns `abb`, `region`, and
+`total`. Name this new dataset `q_1b`, and show its first 6 rows.
 
 ``` r
 q_1b <- q_1a |> 
@@ -63,7 +75,7 @@ q_1b <- q_1a |>
 ```
 
 | state | population | electoral_votes | clinton | trump | johnson | stein | mcmullin | others | winner |
-|:-------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|:-------|
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|:---|
 | Alabama | 4779736 | 9 | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.0225246 | trump |
 | Alaska | 710231 | 3 | 36.55087 | 51.28151 | 5.877128 | 1.8000176 | 0.0000000 | 4.4904710 | trump |
 | Arizona | 6392017 | 11 | 44.58042 | 48.08314 | 4.082188 | 1.3185997 | 0.6699155 | 1.2657329 | trump |
@@ -73,9 +85,13 @@ q_1b <- q_1a |>
 
 <br> <br>
 
-**1c.** Using the `q_1b` dataset, plot the relationship between population size and number of electoral votes. Use color to indicate who won the state. Fit a straight line to the data, set its color to black, size to 0.1, and turn off its confidence interval.
+**1c.** Using the `q_1b` dataset, plot the relationship between
+population size and number of electoral votes. Use color to indicate who
+won the state. Fit a straight line to the data, set its color to black,
+size to 0.1, and turn off its confidence interval.
 
-I lost my code here, but luckily saved the plot I generated. I will paste it below:
+I lost my code here, but luckily saved the plot I generated. I will
+paste it below:
 
 ![](b8cefcdc-2e7a-4e5e-ae04-32deff6e690f.png)
 
@@ -83,7 +99,9 @@ I lost my code here, but luckily saved the plot I generated. I will paste it bel
 
 ### Question 2. Would the election result be any different if the number of electoral votes is exactly proportional to a state’s population size?
 
-**2a.** First, convert the `q_1b` dataset to longer format such that the `population` and `electoral_votes` columns are turned into rows as shown below. Name this new dataset `q_2a`, and show its first 6 rows.
+**2a.** First, convert the `q_1b` dataset to longer format such that the
+`population` and `electoral_votes` columns are turned into rows as shown
+below. Name this new dataset `q_2a`, and show its first 6 rows.
 
 ``` r
 q_2a <- q_1b |> 
@@ -97,7 +115,7 @@ q_2a <- q_1b |>
 ```
 
 | state | clinton | trump | johnson | stein | mcmullin | others | winner | metric | value |
-|:-------|-------:|-------:|-------:|-------:|-------:|-------:|:-------|:-------|-------:|
+|:---|---:|---:|---:|---:|---:|---:|:---|:---|---:|
 | Alabama | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.022525 | trump | population | 4779736 |
 | Alabama | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.022525 | trump | electoral_votes | 9 |
 | Alaska | 36.55087 | 51.28151 | 5.877128 | 1.8000176 | 0.0000000 | 4.490471 | trump | population | 710231 |
@@ -107,7 +125,9 @@ q_2a <- q_1b |>
 
 <br> <br>
 
-**2b.** Then, sum up the number of electoral votes and population size across all states for each candidate. Name this new dataset `q_2b`, and print it as shown below.
+**2b.** Then, sum up the number of electoral votes and population size
+across all states for each candidate. Name this new dataset `q_2b`, and
+print it as shown below.
 
 ``` r
 q_2b <- q_2a  |> 
@@ -125,7 +145,12 @@ q_2b <- q_2a  |>
 
 <br> <br>
 
-**2c.** Use the `q_2b` dataset to contruct a bar plot to show the final electoral vote share under the scenarios of **1)** each state has the number of electoral votes that it currently has, and **2)** each state has the number of electoral votes that is exactly proportional to its population size. Here, assume that for each state, the winner will take all its electoral votes.
+**2c.** Use the `q_2b` dataset to contruct a bar plot to show the final
+electoral vote share under the scenarios of **1)** each state has the
+number of electoral votes that it currently has, and **2)** each state
+has the number of electoral votes that is exactly proportional to its
+population size. Here, assume that for each state, the winner will take
+all its electoral votes.
 
 ``` r
 #current
@@ -181,7 +206,10 @@ total_pop <- q_2b |>
 
 ### Question 3. What if the election was determined by popular votes?
 
-**3a.** First, from [this dataset on GitHub](https://raw.githubusercontent.com/kshaffer/election2016/master/2016ElectionResultsByState.csv), calculate the number of popular votes each candidate received as shown below. Name this new dataset `q_3a`, and print it. <br>
+**3a.** First, from [this dataset on
+GitHub](https://raw.githubusercontent.com/kshaffer/election2016/master/2016ElectionResultsByState.csv),
+calculate the number of popular votes each candidate received as shown
+below. Name this new dataset `q_3a`, and print it. <br>
 
 ``` r
 data <- read_csv("https://raw.githubusercontent.com/kshaffer/election2016/master/2016ElectionResultsByState.csv")
@@ -202,7 +230,9 @@ q_3a3 <- q_3a2 |>
   mutate(Metric = "popular_vote")
 ```
 
-*Note: Vote counts are listed for several other candidates. Please combine the votes for all candidates other than Clinton and Trump into a single `others` category (as shown in the table below)*
+*Note: Vote counts are listed for several other candidates. Please
+combine the votes for all candidates other than Clinton and Trump into a
+single `others` category (as shown in the table below)*
 
 *Hint: `pivot_longer()` may be useful in here.*
 
@@ -214,7 +244,8 @@ q_3a3 <- q_3a2 |>
 
 <br> <br>
 
-**3b.** Combine the `q_2b` dataset with the `q_3a` dataset. Call this new dataset `q_3b`, and print it as shown below.
+**3b.** Combine the `q_2b` dataset with the `q_3a` dataset. Call this
+new dataset `q_3b`, and print it as shown below.
 
 ``` r
 q_3b <- full_join(q_2b, q_3a3)
@@ -232,7 +263,12 @@ q_3b <- full_join(q_2b, q_3a3)
 
 <br> <br>
 
-**3c.** Lastly, use the `q_3b` dataset to contruct a bar plot to show the final vote share under the scenarios of **1)** each state has the number of electoral votes that it currently has, **2)** each state has the number of electoral votes that is exactly proportional to its population size, and **3)** the election result is determined by the popular vote.
+**3c.** Lastly, use the `q_3b` dataset to contruct a bar plot to show
+the final vote share under the scenarios of **1)** each state has the
+number of electoral votes that it currently has, **2)** each state has
+the number of electoral votes that is exactly proportional to its
+population size, and **3)** the election result is determined by the
+popular vote.
 
 ``` r
 q_3b |> 
@@ -247,7 +283,14 @@ geom_col()
 
 ### Question 4. The election result in 2016 came as a huge surprise to many people, especially given that most polls predicted Clinton would win before the election. Where did the polls get wrong?
 
-**4a.** The polling data is stored in the data frame `polls_us_election_2016`. For the sake of simplicity, we will only look at the data from a single poll for each state. Subset the polling data to include only the results from the pollster `Ipsos`. Exclude national polls, and for each state, select the polling result with the `enddate` closest to the election day (i.e. those with the lastest end date). Keep only the columns `state`, `adjpoll_clinton`, and `adjpoll_trump`. Save this new dataset as `q_4a`, and show its first 6 rows.
+**4a.** The polling data is stored in the data frame
+`polls_us_election_2016`. For the sake of simplicity, we will only look
+at the data from a single poll for each state. Subset the polling data
+to include only the results from the pollster `Ipsos`. Exclude national
+polls, and for each state, select the polling result with the `enddate`
+closest to the election day (i.e. those with the lastest end date). Keep
+only the columns `state`, `adjpoll_clinton`, and `adjpoll_trump`. Save
+this new dataset as `q_4a`, and show its first 6 rows.
 
 ``` r
 q_4a <- polls_us_election_2016 |> 
@@ -259,9 +302,12 @@ select(state, adjpoll_clinton, adjpoll_trump)
 
 <br>
 
-*Note: You should have 47 rows in `q_4a` because only 47 states were polled at least once by Ipsos. You don’t need to worry about the 3 missing states and DC.*
+*Note: You should have 47 rows in `q_4a` because only 47 states were
+polled at least once by Ipsos. You don’t need to worry about the 3
+missing states and DC.*
 
-*Hint: `group_by()` and `slice_max()` can be useful for this question. Check out the help file for `slice_max()` for more info.*
+*Hint: `group_by()` and `slice_max()` can be useful for this question.
+Check out the help file for `slice_max()` for more info.*
 
 | state       | adjpoll_clinton | adjpoll_trump |
 |:------------|----------------:|--------------:|
@@ -274,7 +320,9 @@ select(state, adjpoll_clinton, adjpoll_trump)
 
 <br> <br>
 
-**4b.** Combine the `q_4a` dataset with the `q_1b` dataset with a `join` function. The resulting dataset should only have 47 rows. Create the following new variables in this joined dataset.
+**4b.** Combine the `q_4a` dataset with the `q_1b` dataset with a `join`
+function. The resulting dataset should only have 47 rows. Create the
+following new variables in this joined dataset.
 
 ``` r
 q_4b <- q_4a |> 
@@ -292,13 +340,18 @@ select(state, polling_error, result, electoral_votes)
 head(q_4b)
 ```
 
--   `polling_margin`: difference between `adjpoll_clinton` and `adjpoll_trump`
--   `actual_margin`: difference between `clinton` and `trump`
--   `polling_error`: difference between `polling_margin` and `actual_margin`
--   `predicted_winner`: predicted winner based on `adjpoll_clinton` and `adjpoll_trump`
--   `result = ifelse(winner == predicted_winner, "correct prediction", str_c("unexpected ", winner, " win"))`
+- `polling_margin`: difference between `adjpoll_clinton` and
+  `adjpoll_trump`
+- `actual_margin`: difference between `clinton` and `trump`
+- `polling_error`: difference between `polling_margin` and
+  `actual_margin`
+- `predicted_winner`: predicted winner based on `adjpoll_clinton` and
+  `adjpoll_trump`
+- `result = ifelse(winner == predicted_winner, "correct prediction", str_c("unexpected ", winner, " win"))`
 
-Keep only the columns `state`, `polling_error`, `result`, `electoral_votes`. Name the new dataset `q_4b` and show its first 6 rows.
+Keep only the columns `state`, `polling_error`, `result`,
+`electoral_votes`. Name the new dataset `q_4b` and show its first 6
+rows.
 
 | state       | polling_error | result             | electoral_votes |
 |:------------|--------------:|:-------------------|----------------:|
@@ -311,7 +364,10 @@ Keep only the columns `state`, `polling_error`, `result`, `electoral_votes`. Nam
 
 <br> <br>
 
-**4c.** Generate the following plot with the `q_4b` dataset. Use chunk options to adjust the dimensions of the plot to make it longer than the default dimension. Based on this plot, where did the polls get wrong in the 2016 election?
+**4c.** Generate the following plot with the `q_4b` dataset. Use chunk
+options to adjust the dimensions of the plot to make it longer than the
+default dimension. Based on this plot, where did the polls get wrong in
+the 2016 election?
 
 ``` r
 q_4b |> 
