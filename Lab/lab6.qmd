@@ -1,0 +1,90 @@
+---
+title: "lab6"
+author: "Patrick Gritton"
+format: Qmd
+editor: visual
+---
+
+## Lab 6
+
+Data cleaning and Tidy data
+
+**Exersize 1**
+
+##load in the data
+
+``` r
+library(tidyverse)
+library(knitr)
+
+whales <- read_csv("https://raw.githubusercontent.com/nt246/NTRES-6100-data-science/main/datasets/whales.csv")
+whales |> head() |> kable()
+```
+
+##Question 1. Create a new data frame that has one row per observer, per species and one single variable of all the information collected. Name this data frame whales_long.
+
+``` r
+whales_long <- whales |> 
+pivot_longer(-1,names_to = 'species', values_to = 'data')
+```
+
+##Question 2. Starting from whales_long, create another data frame that includes only events for which there is information. Name this data frame whales_clean.
+
+``` r
+whales_clean <- whales_long |> 
+filter(!data == is.na(TRUE))
+```
+
+##Question 3. Starting from whales_clean, create another data frame with one variable per type of information, one piece of information per cell. Some cells might be empty. Name this data frame whales_split.
+
+``` r
+whales_split <- whales_clean |> 
+separate(col = data, into = c('date', 'outcome', 'lengthft', 'ocean'), sep = ',')
+```
+
+##Question 4. Starting from whales_split, create another data frame in which all columns are parsed as instructed below. Name this data frame whales_parsed.
+
+``` r
+whales_parsed <- whales_split |> 
+mutate(
+  observer = as.double(observer),
+  species = as.character(species),
+  date = as.Date(date, format = "%m/%d/%y"),
+  outcome = as.character(outcome),
+  lengthft = as.integer(lengthft),
+  ocean = as.character(ocean)
+  )
+```
+
+##Question 5. Using whales_parsed, print a summary table with: 1) number ship strikes by species, 2) average whale size by species, omitting NA values in the calculation.
+
+``` r
+whales_parsed |>
+filter(!lengthft == is.na(TRUE)) |> 
+group_by(species) |> 
+summarize(mean_length = mean(lengthft))
+```
+
+##Question 6. Try to summarize as much information contained in whales_parsed as possible in one plot.
+
+``` r
+whales_parsed |> 
+mutate(outcome = ifelse(str_length(outcome) < 3, "Unknown", outcome)) |>
+mutate(ocean = ifelse(ocean == "artic", "arctic", ocean)) |> 
+ggplot(aes(x = date, y = species, color = outcome, facet_wrap ~ ocean)) +
+geom_point()
+```
+
+##It is very difficult for me to add length into this graph. I could theoretically accomplish that by making the shape or size of the points vary according to the length. If I were to do that by shape, I would have to learn how to bin the sizes into categories, and If I were to do size, I would have to come up with a way to normalize them so that the points with size 76 weren't astronomical compared to the points with no data.
+
+![](lab6.1)
+
+**Exercize 2: Baby Names**
+##read data
+
+```r
+install.packages("babynames")
+library(babynames)
+babynames |> head() |> kable()
+```
+
