@@ -10,6 +10,8 @@ Please indicate if you are **taking this class for credit**.
 
 Please use the following table to grade the student's assignment:
 
+Assignment 3: https://patrickgritton.github.io/collab_website/
+
 | Assignment# | Fully completed | Partially completed | Not completed |
 |:-----------:|:---------------:|:-------------------:|:-------------:|
 |      1      |        X         |                     |               |
