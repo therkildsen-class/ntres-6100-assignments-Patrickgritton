@@ -1,0 +1,104 @@
+---
+title: "ai_log_assignment8"
+format: gfm
+editor: visual
+---
+
+**2.2**
+
+prompt:
+
+#Write a for loop which uses the str_c() function to print out the path to the buoy 44013 data file from year 1987 to 1992
+
+return:
+
+```r
+start <- 1987
+end <- 1992
+for (i in start:end){
+  path <- str_c("https://raw.githubusercontent.com/nt246/NTRES-6100-data-science/master/datasets/buoydata/44013_, i, .csv")
+  print(path)
+```
+ran code
+verdict: incorrect, but helpful for showing me a piece of syntax I wasnt aware of, I eventually got it
+
+**2.3**
+
+prompt:
+write a for loop which reads the buoy 44013 data file from year start to end and combine them together
+Hint: bind_rows() could be useful for this question.
+
+```r
+start <- 1987
+end <- 1992
+df_combined <- NULL
+for (i in start:end){
+  path <- str_c("https://raw.githubusercontent.com/nt246/NTRES-6100-data-science/master/datasets/buoydata/44013_", i, ".csv")
+  df <- read_csv(path)
+  df_combined <- bind_rows(df_combined, df)
+}
+
+dim(df_combined)
+```
+Ran code, 
+verdict: it needed some adjusting, but it worked!!!
+
+**2.4**
+2.4 Building on the workflow that you used in 2.1 - 2.3, use a for loop to read in, clean up, and summarize the buoy data from all years from 1987 to 1992 using a dplyr workflow.
+Within the loop, for each year, read in the data, select only the columns YY (year), MM (month), WVHT (wave heights), WTMP (temperatures) and rename these columns to something understandable, and summarize monthly averaged wave heights and temperatures throughout that year. Combine these summary tables from different years together and plot the variation of these monthly averaged values through time as shown below.
+
+output:
+```r
+start <- 1987
+end <- 1992
+df_summary_combined <- NULL
+for (i in start:end){
+  path <- str_c("https://raw.githubusercontent.com/nt246/NTRES-6100-data-science/master/datasets/buoydata/44013_", i, ".csv") }
+```
+Ran code, 
+verdict: no, this doesnt even get close... oh well. 
+
+prompt:
+
+write a for loop to read in the data for each year from 1987 to 1992, and select the columns "YY", "MM"
+```r
+start <- 1987
+end <- 1992
+df_summary_combined <- NULL
+for (i in start:end){
+  path <- str_c("https://raw.githubusercontent.com/nt246/NTRES-6100-data-science/master/datasets/buoydata/44013_", i, ".csv")
+  df <- read_csv(path) |> 
+    select(YY, MM, WVHT, WTMP) |> 
+    rename(Year = YY, Month = MM, Wave_Height = WVHT, Water_Temperature = WTMP) |> 
+    group_by(Year, Month) |> 
+    summarize(Avg_Wave_Height = mean(Wave_Height, na.rm = TRUE),
+              Avg_Water_Temperature = mean(Water_Temperature, na.rm = TRUE))
+  
+  df_summary_combined <- bind_rows(df_summary_combined, df)
+}
+```
+
+ran code
+verdict: wow! im beyond imporessed that just worked and made a combined dataset!
+
+Weird, I feel I understand what each part of the code is doing, but I am confused... why are there two outliers in month 10 of 88 and month 1 of 89??
+
+Ok, it seemingly worked as intended, but the dataset itself has random values of 99, even when I remove the na == c(99,999,99,999) argument from the reading code.
+
+Even when I insert the argument (na = c("0", "0", "0", "0"), the values truly remain at 99, so I am moving forward assuming its not a bug and the 99 really exists...
+
+prompt: using df_combined, make a ggplot of the variation in the monthly averaged values across the years 
+
+```r
+ggplot(df_summary_combined, aes(x = as.Date(paste(Year, Month, "15", sep = "-")), 
+                                y = Avg_Wave_Height)) +
+  geom_line(color = "blue") +
+  labs(title = "Monthly Averaged Wave Heights (1987-1992)",
+       x = "Date",
+       y = "Average Wave Height (m)") +
+  theme_minimal()
+  
+  ```
+  
+  ran code, re tried 4 times to fix errors
+  verdict... well... it did something, but it needs work. I find it funny that it made the line blue all on its own!
