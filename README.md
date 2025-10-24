@@ -18,8 +18,8 @@ Assignment 3: https://patrickgritton.github.io/collab_website/
 |      2      |        X         |                     |               |
 |      3      |        X         |                     |              |
 |      4      |                 |                     |       X        |
-|      5      |                 |                     |       X        |
+|      5      |        X         |                     |               |
 |      6      |                 |                     |       X        |
-|      7      |                 |                     |               |
+|      7      |         X        |                     |               |
 |      8      |                 |                     |               |
 |      9      |                 |                     |               |
