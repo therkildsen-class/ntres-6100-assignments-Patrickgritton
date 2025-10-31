@@ -1,0 +1,97 @@
+---
+title: "assignment9ailog"
+format: gfm
+editor: visual
+---
+
+##1.2
+
+#Prompt:
+
+The following function converts temperature in farenheight to temperature in celcius
+
+``` r
+f_to_c <- function(fahrenheit) {
+  celsius <- (fahrenheit - 32) * 5 / 9
+  return(celsius)
+}
+```
+
+modify the above function to instead return the phrase "test" if the value of celcius is below -10
+
+``` r
+f_to_c_message <- function(fahrenheit) {
+  celsius <- (fahrenheit - 32) * 5 / 9
+  if (celsius < -10) {
+    return("test")
+  } else {
+    return(celsius)
+  }
+}
+```
+
+f_to_c_message(-10)
+
+Now modify the above function to also return "test2" if the value of celcius is above 30
+
+``` r
+f_to_c_message <- function(fahrenheit) {
+  celsius <- (fahrenheit - 32) * 5 / 9
+  if (celsius < -10) {
+    return("test")
+  } else if (celsius > 30) {
+    return("test2")
+  } else {
+    return(celsius)
+  }}
+```
+
+f_to_c_message(-10) f_to_c_message(90) f_to_c_message(40)
+
+# Verdict: successful. I just need to use that syntax and add the correct words instead of "test"
+
+##2.0
+
+#prompt:
+
+``` r
+x <- c(1, 2, 3, 5, 6, 8)
+y <- c(2, 4, 6, 7, 9, 10)
+```
+
+given the vectors "x" and "y" write a function that returns elements that are in x, but not y AND values that are in y, but not x. You will need to use set operations to accomplish this task. Ensure that this funciton will work for any generic vector set x and y.
+
+``` r
+symmetric_diff <- function(x, y) {
+  only_in_x <- setdiff(x, y)
+  only_in_y <- setdiff(y, x)
+  result <- c(only_in_x, only_in_y)
+  return(result)
+}
+```
+
+##Verdict: successful as is, copilot is wildly impressive to me to be completley honest with you.
+
+## 3
+
+this ones a doozy.
+
+#prompt:
+
+``` r
+mtcars_tbl <- as_tibble(mtcars, rownames = "model")
+mtcars_tbl %>%
+  head() %>%
+  kable()
+```
+
+re order the factor levels of the mtcars_tbl dataset based on values of the mpg variable
+
+``` r
+mtcars_tbl <- as_tibble(mtcars, rownames = "model")
+mtcars_tbl1 <- mtcars_tbl %>%
+  mutate(model = fct_reorder(model, mpg))
+  
+```
+
+\`\`\` view

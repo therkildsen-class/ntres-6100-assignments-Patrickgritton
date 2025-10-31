@@ -36,7 +36,7 @@ We will also use [this dataset](https://raw.githubusercontent.com/kshaffer/elect
 **1a.** Use a `join` function to combine the `murders` dataset, which contains information on population size, and the `results_us_election_2016` dataset, which contains information on the number of electoral votes. Name this new dataset `q_1a`, and show its first 6 rows.
 
 | state | abb | region | population | total | electoral_votes | clinton | trump | johnson | stein | mcmullin | others |
-|:-----|:-----|:-----|-----:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|-----:|
+|:---|:---|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Alabama | AL | South | 4779736 | 135 | 9 | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.0225246 |
 | Alaska | AK | West | 710231 | 19 | 3 | 36.55087 | 51.28151 | 5.877128 | 1.8000176 | 0.0000000 | 4.4904710 |
 | Arizona | AZ | West | 6392017 | 232 | 11 | 44.58042 | 48.08314 | 4.082188 | 1.3185997 | 0.6699155 | 1.2657329 |
@@ -63,7 +63,7 @@ q_1b <- q_1a |>
 ```
 
 | state | population | electoral_votes | clinton | trump | johnson | stein | mcmullin | others | winner |
-|:-------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|:-------|
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|:---|
 | Alabama | 4779736 | 9 | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.0225246 | trump |
 | Alaska | 710231 | 3 | 36.55087 | 51.28151 | 5.877128 | 1.8000176 | 0.0000000 | 4.4904710 | trump |
 | Arizona | 6392017 | 11 | 44.58042 | 48.08314 | 4.082188 | 1.3185997 | 0.6699155 | 1.2657329 | trump |
@@ -97,7 +97,7 @@ q_2a <- q_1b |>
 ```
 
 | state | clinton | trump | johnson | stein | mcmullin | others | winner | metric | value |
-|:-------|-------:|-------:|-------:|-------:|-------:|-------:|:-------|:-------|-------:|
+|:---|---:|---:|---:|---:|---:|---:|:---|:---|---:|
 | Alabama | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.022525 | trump | population | 4779736 |
 | Alabama | 34.35795 | 62.08309 | 2.094169 | 0.4422682 | 0.0000000 | 1.022525 | trump | electoral_votes | 9 |
 | Alaska | 36.55087 | 51.28151 | 5.877128 | 1.8000176 | 0.0000000 | 4.490471 | trump | population | 710231 |
