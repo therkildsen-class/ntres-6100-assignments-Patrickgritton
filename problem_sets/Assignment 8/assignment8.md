@@ -1,11 +1,16 @@
-# assignment8
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
+# assignment8
 
 library(tidyverse)
 
 **Question 1.1**
 
-mass = a \* length ^ b a \<- .73 b \<- 3.63
+mass = a \* length \^ b a \<- .73 b \<- 3.63
 
 dinosaur_lengths \<- c(25.31, 16.7, 25.22, 24.08, 13.85, 24.57, 18.61,
 17.79, 26.31, 15.02, 13.42, 16.4, 22.75, 23.68, 21.93, 17.33, 14.74,
@@ -190,17 +195,14 @@ ggplot(df_summary_combined, aes(x = as.Date(paste(Year, Month, "15", sep = "-"))
 ggplot(df_summary_combined, aes(x = as.Date(paste(Year, Month, "15", sep = "-")), 
    y = Avg_Water_Temperature)) +
   geom_line(color = "blue") +
-  labs(title = "Monthly Averaged Wave Heights (1987-1992)",
+  labs(title = "Monthly Averaged temperature (1987-1992)",
        x = "Date",
-       y = "Average Water temperature (m)") +
+       y = "Average Water temperature") +
   theme_minimal()
 ```
 
-![](problem_sets/Assignment%208/a1e0f841-13e1-4223-9a9f-4d05f25bb0bb.png)
-
-![](problem_sets/Assignment%208/e9f2326a-4034-4098-8562-a899994584bb.png)
-
-Note: I didn’t make these blue, copilot did, lol
+![](a1e0f841-13e1-4223-9a9f-4d05f25bb0bb.png)![](5143f6ee-cde6-4bfb-ab0d-037685abcc9d.png)Note:
+I didn’t make these blue, copilot did, lol
 
 Note 2: I have tried debugging the outliers. I have manually re imported
 the data, and it seems that the outliers are being caused by genuine
