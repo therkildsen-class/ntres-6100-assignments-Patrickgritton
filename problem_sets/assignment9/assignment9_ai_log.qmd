@@ -94,4 +94,6 @@ mtcars_tbl1 <- mtcars_tbl %>%
   
 ```
 
-\`\`\` view
+Verdict: lets try another way
+
+Prompt

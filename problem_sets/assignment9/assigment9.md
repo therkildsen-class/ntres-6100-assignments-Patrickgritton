@@ -1,4 +1,4 @@
-# assignment9
+# Assignment 9
 
 
 # Assignment 9: Functions and factors
@@ -187,30 +187,28 @@ their names are shown next to the data points. Also, the size of each
 data point maps to its horse power (`hp`), and the color maps to number
 of cylinders (`cyl`).
 
-![](assignment_9_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
-
 <br>
 
-**Hints:**
+\#factor reorder the data by mpg
 
-- Start by reordering the factor levels of the `model` column based on
-  values in the `mpg` column.
+``` r
+mtcars_tbl <- as_tibble(mtcars, rownames = "model")
+mtcars_tbl <- mtcars_tbl %>%
+  mutate(model = fct_reorder(model, mpg))
+```
 
-- You may also need to convert `cyl` first into a character variable
-  (`as.character()`) or a factor (`factor` or `as_factor()`), and then
-  (re)set its factor levels.
+\#make the plot
 
-- When making the plot, please pay attention to the following elements
-  of the plot that need to be specified.
+``` r
+ggplot(mtcars_tbl, aes(x = mpg, y = model, size = hp, color = as.factor(cyl))) + 
+geom_point() + 
+geom_text(aes(label = model), hjust = -0.1, size = 3) +
+xlim(8, 40) + 
+labs(title = "Miles Per Gallon of Car Models", x = "Fuel Consumption in Miles per Gallon (mpg)", y = "Car Model", color = "Number of Cylinders", size = "Horse Power (hp)") + 
+theme( axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
 
-  - Horizontal adjustment of the text labels (“`hjust`” option in
-    `geom_text()`)
-  - The range of the x-axis (`xlim()`)
-  - x-axis label and legend titles (`labs()`)
-  - The preset theme (`theme_*()`)
-  - The removal of the y-axis (`theme()`)
-
-<br>
+![](47a87dec-6443-4734-85d5-181c43453a0f.png)
 
 #### **Reflection Questions:**
 
@@ -218,8 +216,76 @@ of cylinders (`cyl`).
 
 #### In this assignment, you wrote functions that operate on vectors (Exercises 1 and 2) and manipulated a data frame to create a plot (Exercise 3). Explain the difference between a simple character vector (like the one for singers) and a factor (like the model column). Why was it necessary to treat the model column as a factor and reorder its levels to create the final plot?
 
+To my understanding, the model column had to be in factor format in
+order to re-order it based on the values in mpg. If both were vectors, I
+don’t think there is a simple way to re-order the values of one vector
+using the values of another within a ggplot plot (Whereas you can just
+use fct_reorder if it’s a factor).
+
 <br>
 
 #### Identify one of the three exercises where you used an AI assistant to help generate or debug a chunk of code. Provide the specific prompt you used. Then, show the code before you finalized it (e.g., the AI’s initial suggestion or your first attempt) and the final, working code. In your commentary, explain what was missing or incorrect in the “before” version and what you learned by testing and correcting it to produce the final version.
+
+Excersize 3:
+
+prompt:
+
+``` r
+mtcars_tbl <- as_tibble(mtcars, rownames = "model")
+mtcars_tbl %>%
+  head() %>%
+  kable()
+```
+
+given the dataset mtcars_tbl, write code in ggplot which creates a plot
+that shows the miles per gallon (mpg) of car models on the x axis.
+Different models (model) are ordered on the y axis according to their
+mpg and their names are shown next to the data points. Also, the size of
+each data point maps to its horse power (hp), and the color maps to
+number of cylinders (cyl).
+
+Copilot code:
+
+``` r
+ggplot(mtcars_tbl, aes(x = mpg, y = model, size = hp, color = as.factor(cyl))) +
+  geom_point() +
+  geom_text(aes(label = model), hjust = -0.1, size = 3) +
+  labs(title = "Miles Per Gallon of Car Models",
+       x = "Miles Per Gallon (mpg)",
+       y = "Car Model",
+       color = "Number of Cylinders",
+       size = "Horse Power (hp)") +
+  theme_minimal()
+```
+
+Changes:
+
+1.  had to write a seperate code chunk to reorder the model factor by
+    mpg
+
+2.  had to edit the theme to remove the y axis and associated plot
+    elements
+
+3.  Had to manually change the range of the x axis
+
+Final code:
+
+``` r
+ggplot(mtcars_tbl, aes(x = mpg, y = model, size = hp, color = as.factor(cyl))) + 
+geom_point() + 
+geom_text(aes(label = model), hjust = -0.1, size = 3) +
+xlim(8, 40) + 
+labs(title = "Miles Per Gallon of Car Models", x = "Fuel Consumption in Miles per Gallon (mpg)", y = "Car Model", color = "Number of Cylinders", size = "Horse Power (hp)") + 
+theme( axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+Through editing and correcting copilot’s code, I learned a few things.
+Firstly, I learned the strengths and limitations of copilot when applied
+to ggplot (mainly that it struggles when given lots of instructions and
+is much better at producing a skeleton plot which can be easily edited).
+I also learned how to use theme arguments to remove the Y axis, and how
+to manually change the x axis range. This excersize really helped me
+learn to use copilot more effectively and accountably, and not resort to
+basic and mindless vibe-coding to kludge fixes for my problems.
 
 <br>
